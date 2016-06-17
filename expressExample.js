@@ -8,9 +8,8 @@ var api = require('./api.js');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/', express.static('public'));
-
+app.set('view engine', 'ejs');
 var url = 'mongodb://localhost:27017/nodedemo';
-// Use connect method to connect to the Server
 MongoClient.connect(url, (err, db) => {
   assert.equal(null, err);
   console.log("Connected correctly to server");
@@ -18,14 +17,3 @@ MongoClient.connect(url, (err, db) => {
   app.listen(3000);
 
 });
-
-var insertDocuments = function(db, callback) {
-  // Get the documents collection
-  var collection = db.collection('locationList');
-  // Insert some documents
-  collection.insert(obj, function(err, result) {
-    assert.equal(err, null);
-    console.log("Inserted documents into the document collection");
-    callback(result);
-  });
-}
